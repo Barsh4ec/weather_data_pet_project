@@ -1,5 +1,6 @@
 .env
 /postgres/data
 .venv
+.vscode
 
 __pycache__

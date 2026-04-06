@@ -8,7 +8,6 @@ api_key = os.getenv("API_KEY")
 api_url = f"https://api.weatherstack.com/current?access_key={api_key}&query=Lviv"
 
 def fetch_data():
-
     try:
         response = requests.get(api_url)
         response.raise_for_status()

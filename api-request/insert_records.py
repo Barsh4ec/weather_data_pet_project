@@ -1,5 +1,5 @@
 import psycopg2
-from api_request import mock_fetch_data
+from api_request import mock_fetch_data, fetch_data
 from dotenv import load_dotenv
 import os
 load_dotenv()
@@ -13,7 +13,7 @@ def connect_to_db():
     print("Connecting to the PostgreSQL database")
     try:
         conn = psycopg2.connect(
-            host="localhost",
+            host="db",
             port=5432,
             dbname=db_name,
             user=db_user,
@@ -94,6 +94,7 @@ def insert_records(conn, data):
 def main():
     try:
         data = mock_fetch_data()
+        # data = fetch_data()
         conn = connect_to_db()
         create_table(conn)
         insert_records(conn, data)

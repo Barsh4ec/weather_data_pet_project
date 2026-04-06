@@ -1,9 +1,10 @@
 from airflow import DAG
 from airflow.providers.standard.operators.python import PythonOperator
 from datetime import datetime, timedelta
+import sys
 
-def example_task():
-    print("This is an example task")
+sys.path.append("/opt/airflow/api-request")
+from insert_records import main
 
 default_args = {
     "description": "A DAG to orchestrate data",
@@ -14,11 +15,11 @@ default_args = {
 dag = DAG(
     dag_id="weather-api-orchestrator",
     default_args=default_args,
-    schedule=timedelta(minutes=2)
+    schedule=timedelta(minutes=5)
 )
 
 with dag:
     task1 = PythonOperator(
-        task_id="first_task",
-        python_callable=example_task
+        task_id="update_data_task",
+        python_callable=main
     )
