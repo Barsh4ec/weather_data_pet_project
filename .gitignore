@@ -1,5 +1,5 @@
 .env
-/postgres
+/postgres/data
 .venv
 
 __pycache__
