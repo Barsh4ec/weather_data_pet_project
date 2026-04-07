@@ -1,0 +1,12 @@
+weather_data_project:
+  outputs:
+    dev:
+      dbname: "{{ env_var('DB_NAME') }}"
+      host: "{{ env_var('DB_NAME') }}"
+      pass: "{{ env_var('DB_PASSWORD') }}"
+      port: 5432
+      schema: dev
+      threads: 4
+      type: postgres
+      user: "{{ env_var('DB_USER') }}"
+  target: dev

@@ -34,6 +34,23 @@ services:
       - .env
     networks:
       - my-network
+  
+  dbt:
+    container_name: dbt_container
+    image: ghcr.io/dbt-labs/dbt-postgres:1.9.latest
+    volumes:
+      - ./dbt/weather_data_project:/usr/app
+      - ./dbt:/root/.dbt
+    working_dir: /usr/app
+    environment:
+      DBT_PROFILES_DIR: "/root/.dbt"
+    env_file:
+      - .env
+    depends_on:
+      - db
+    networks:
+      - my-network
+    command: run
 
 networks:
   my-network:

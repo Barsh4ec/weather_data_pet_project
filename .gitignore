@@ -2,5 +2,7 @@
 /postgres/data
 .venv
 .vscode
+.user.yml
+logs
 
 __pycache__
