@@ -27,7 +27,11 @@ services:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:${AF_DB_PASSWORD}@${DB_NAME}:5432/airflow_db
     volumes:
       - ./airflow/dags:/opt/airflow/dags
+      - ./.env:/opt/airflow/dags/.env
       - ./api-request:/opt/airflow/api-request
+      - /var/run/docker.sock:/var/run/docker.sock
+    group_add:
+      - '1000'
     depends_on:
       - db
     env_file:
