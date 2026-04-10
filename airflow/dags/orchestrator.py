@@ -33,17 +33,17 @@ with dag:
         working_dir="/usr/app",
         mounts=[
             Mount(
-                source="/home/taras/Projects/weather-data-pet-project/dbt/weather_data_project",
+                source="/home/barsh4ec/Projects/weather_data_pet_project/dbt/weather_data_project",
                 target="/usr/app",
                 type="bind"
             ),
             Mount(
-                source="/home/taras/Projects/weather-data-pet-project/dbt/profiles.yml",
+                source="/home/barsh4ec/Projects/weather_data_pet_project/dbt/profiles.yml",
                 target="/root/.dbt/profiles.yml",
                 type="bind"
             )
         ],
-        network_mode="weather-data-pet-project_my-network",
+        network_mode="weather_data_pet_project_my-network",
         docker_url="unix://var/run/docker.sock",
         auto_remove="success",
         env_file=".env"

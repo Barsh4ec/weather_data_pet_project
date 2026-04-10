@@ -2,7 +2,7 @@ x-superset-user: &superset-user root
 x-superset-volumes: &superset-volumes
   # /app/pythonpath_docker will be appended to the PYTHONPATH in the final container
   - ./docker:/app/docker
-  - ./superset:/app/superset
+  # - ./superset:/app/superset
   - ./docker/superset_config.py:/app/pythonpath/superset_config.py
 
 services:
@@ -66,9 +66,10 @@ services:
   
   redis:
     image: redis:7
+    container_name: superset_cache
     restart: unless-stopped
     ports:
-      - "127.0.0.1:${REDIS_PORT:-6379}:6379"
+      - "127.0.0.1:6379:6379"
     volumes:
       - redis:/data
     networks:
@@ -89,9 +90,9 @@ services:
     user: *superset-user
     volumes: *superset-volumes
     environment:
-      SUPERSET_LOAD_EXAMPLES: "${SUPERSET_LOAD_EXAMPLES:-yes}"
-      SUPERSET_LOG_LEVEL: "${SUPERSET_LOG_LEVEL:-info}"
-      DATABASE_DB: "${POSTGRES_DB}"
+      SUPERSET_LOAD_EXAMPLES: ${SUPERSET_LOAD_EXAMPLES:-no}
+      SUPERSET_LOG_LEVEL: ${SUPERSET_LOG_LEVEL:-info}
+      DATABASE_DB: ${POSTGRES_DB:-superset_db}
     healthcheck:
       disable: true
     networks:
@@ -106,15 +107,15 @@ services:
     command: ["/app/docker/docker-bootstrap.sh", "app"]
     restart: unless-stopped
     ports:
-      - ${SUPERSET_PORT:-8088}:8088
+      - 8088:8088
     user: *superset-user
     depends_on:
       superset-init:
         condition: service_completed_successfully
     volumes: *superset-volumes
     environment:
-      SUPERSET_LOG_LEVEL: "${SUPERSET_LOG_LEVEL:-info}"
-      DATABASE_DB: "${POSTGRES_DB}"
+      SUPERSET_LOG_LEVEL: ${SUPERSET_LOG_LEVEL:-info}
+      DATABASE_DB: ${POSTGRES_DB:-superset_db}
     networks:
       - my-network
 
