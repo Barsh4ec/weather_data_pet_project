@@ -1,3 +1,5 @@
+import time
+
 import requests
 from dotenv import load_dotenv
 import os
@@ -5,14 +7,19 @@ import os
 load_dotenv()
 
 api_key = os.getenv("API_KEY")
-api_url = f"https://api.weatherstack.com/current?access_key={api_key}&query=Lviv"
 
-def fetch_data():
+
+def fetch_data(city_names: list):
     try:
-        response = requests.get(api_url)
-        response.raise_for_status()
-        print("API response received successfully")
-        return response.json()
+        results = []
+        for city_name in city_names:
+            api_url = f"https://api.weatherstack.com/current?access_key={api_key}&query={city_name}"
+            response = requests.get(api_url)
+            response.raise_for_status()
+            print("API response received successfully")
+            results.append(response.json())
+            time.sleep(1)
+        return results
     except requests.exceptions.RequestException as e:
         print(f"An error occured: {e}")
         raise
