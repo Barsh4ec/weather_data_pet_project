@@ -94,7 +94,7 @@ def insert_records(conn, data):
 def main():
     try:
         # data = mock_fetch_data()
-        data = fetch_data(["Lviv", "Odesa"])
+        data = fetch_data(["Lviv"])
         conn = connect_to_db()
         create_table(conn)
         for city_data in data:
